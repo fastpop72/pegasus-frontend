@@ -24,9 +24,9 @@ before_build:
   - git submodule update --init
 
 build_script:
-  - appveyor DownloadFile http://libsdl.org/release/SDL2-devel-2.0.14-VC.zip
-  - 7z x SDL2-devel-2.0.14-VC.zip
-  - ren SDL2-2.0.14 SDL2
+  - appveyor DownloadFile http://libsdl.org/release/SDL2-devel-2.0.7-VC.zip
+  - 7z x SDL2-devel-2.0.7-VC.zip
+  - ren SDL2-2.0.7 SDL2
   - copy C:\projects\pegasus-frontend\SDL2\lib\x64\SDL2.dll C:\Windows\System32
   - md build
   - cd build
