@@ -24,9 +24,13 @@ before_build:
   - git submodule update --init
 
 build_script:
+  - appveyor DownloadFile http://libsdl.org/release/SDL2-devel-2.0.14-VC.zip
+  - 7z x SDL2-devel-2.0.14-VC.zip
+  - ren SDL2-2.0.14 SDL2
+  - copy C:\projects\pegasus-frontend\SDL2\lib\x64\SDL2.dll C:\Windows\System32
   - md build
   - cd build
-  - qmake ..
+  - qmake .. USE_SDL_GAMEPAD=1 SDL_LIBS="-LC:\projects\pegasus-frontend\SDL2\lib\x64 -lSDL2" SDL_INCLUDES=C:\projects\pegasus-frontend\SDL2\include
   - "%MAKE%"
   - "%MAKE% check"
   - "%MAKE% install"
@@ -44,6 +48,7 @@ build_script:
 
   - copy ..\README.md C:\pegasus-frontend
   - copy ..\LICENSE.md C:\pegasus-frontend
+  - copy C:\projects\pegasus-frontend\SDL2\lib\x64\SDL2.dll C:\pegasus-frontend
   - git describe --always > tmp_out.txt
   - set /p SUFFIX=<tmp_out.txt
   - 7z a pegasus-fe_%SUFFIX%_win-%flavor%.zip C:\pegasus-frontend
